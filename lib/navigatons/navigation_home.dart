@@ -38,11 +38,11 @@ class _NavigationExampleState extends State<NavigationExample> {
                 },
               ),
               TextButton(
-                child: const Text('Go to Second Page with pushAndRemoveUntil'),
+                child: const Text('Go to Home Page with pushAndRemoveUntil'),
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                       (route) => false);
                 },
               ),

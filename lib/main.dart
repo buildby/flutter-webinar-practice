@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snippets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:flutter_snippets/common_widgets/page_with_safearea.dart';
 import 'package:flutter_snippets/common_widgets/page_without_safearea.dart';
+import 'package:flutter_snippets/firebaseTodoApp/providers/authprovider.dart';
+import 'package:flutter_snippets/firebaseTodoApp/providers/todoprovider.dart';
+import 'package:flutter_snippets/firebaseTodoApp/screens/login_screen.dart';
 import 'package:flutter_snippets/navigatons/navigation_home.dart';
 import 'package:flutter_snippets/navigatons/second_page.dart';
+import 'package:provider/provider.dart';
 import '../animations/crossfade_animation.dart';
 import '../common_widgets/button.dart';
 import '../common_widgets/column.dart';
@@ -29,12 +33,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const HomePage(),
-      routes: {
-        '/second-page': (context) => const SecondPage()
-      }, //Added for user named route
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => TodoProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const HomePage(),
+        routes: {
+          '/second-page': (context) => const SecondPage()
+        }, //Added for user named route
+      ),
     );
   }
 }
@@ -365,6 +375,21 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => const NavigationExample())),
                   child: const Text(
                     'Navigation Example',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: style,
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen())),
+                  child: const Text(
+                    'Firebase Exaple',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ),
