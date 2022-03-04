@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snippets/firebaseTodoApp/providers/authprovider.dart';
+import 'package:flutter_snippets/firebaseTodoApp/screens/todo_home_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String authAction = 'login';
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -34,14 +36,60 @@ class _LoginScreenState extends State<LoginScreen> {
 
   formSubmit() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       // debugPrint('Valid');
-      if (authAction == 'login') {
-        Provider.of<AuthProvider>(context, listen: false).logIn();
-      } else {
-        Provider.of<AuthProvider>(context, listen: false).signUp(
-            name: nameController.text,
-            email: emailController.text,
-            password: passwordController.text);
+
+      try {
+        if (authAction == 'login') {
+          setState(() {});
+          final response =
+              await Provider.of<AuthProvider>(context, listen: false).logIn(
+                  email: emailController.text,
+                  password: passwordController.text);
+          if (response != null && response['error'] != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(response['error']['message']),
+              duration: const Duration(seconds: 1),
+            ));
+          } else {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const TodoHomeScreen()),
+                (route) => false);
+          }
+        } else {
+          final response =
+              await Provider.of<AuthProvider>(context, listen: false).signUp(
+                  name: nameController.text,
+                  email: emailController.text,
+                  password: passwordController.text);
+
+          if (response != null && response['error'] != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(response['error']['message']),
+              duration: const Duration(seconds: 1),
+            ));
+          } else {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const TodoHomeScreen()),
+                (route) => false);
+          }
+        }
+      } catch (error) {
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(error.toString()),
+          duration: const Duration(seconds: 1),
+        ));
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
       }
     } else {
       return;
@@ -49,7 +97,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   myInit() async {
-    Provider.of<AuthProvider>(context, listen: false).userLoginCheck();
+    final isExist = await Provider.of<AuthProvider>(context, listen: false)
+        .userLoginCheck();
+    if (isExist) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => TodoHomeScreen()),
+          (route) => false);
+    }
   }
 
   @override
