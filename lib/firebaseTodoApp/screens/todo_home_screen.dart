@@ -71,23 +71,36 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : SafeArea(
-              child: RefreshIndicator(
-              onRefresh: () async {
-                await fetchTodos();
-              },
-              child: SizedBox(
-                height: deviceHeight,
-                child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: deviceWidth * 0.05,
-                        vertical: deviceWidth * 0.05),
-                    child: Column(
-                      children: [...todos.map((e) => TodoList(todoModel: e))],
-                    )),
-              ),
-            )),
+          : todos.isEmpty
+              ? const Center(
+                  child: Text(
+                    'No task',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: .5,
+                    ),
+                  ),
+                )
+              : SafeArea(
+                  child: RefreshIndicator(
+                  onRefresh: () async {
+                    await fetchTodos();
+                  },
+                  child: SizedBox(
+                    height: deviceHeight,
+                    child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: deviceWidth * 0.05,
+                            vertical: deviceWidth * 0.05),
+                        child: Column(
+                          children: [
+                            ...todos.map((e) => TodoList(todoModel: e))
+                          ],
+                        )),
+                  ),
+                )),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff050A30),
         child: const Icon(Icons.add),

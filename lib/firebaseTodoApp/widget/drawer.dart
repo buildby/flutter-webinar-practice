@@ -65,14 +65,13 @@ class _AppDrawerState extends State<AppDrawer> {
                   await Provider.of<AuthProvider>(context, listen: false)
                       .logout();
 
+                  Provider.of<TodoProvider>(context, listen: false)
+                      .setTodoToEmpty();
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const LoginScreen()),
                       (route) => false);
-
-                  Provider.of<TodoProvider>(context, listen: false)
-                      .setTodoToEmpty();
                 },
                 child: const Text('Logout'),
                 style: TextButton.styleFrom(

@@ -93,13 +93,13 @@ class AuthProvider with ChangeNotifier {
       final response = await http.get(Uri.parse(url), headers: header);
       final responseData = json.decode(response.body);
 
-      debugPrint(responseData);
+      // debugPrint(responseData);
       userModel = UserModel(
           email: responseData[responseData.keys.first]['email'],
           token: token,
           name: responseData[responseData.keys.first]['name'],
           uid: uid);
-      debugPrint(userModel.toString());
+      // debugPrint(userModel.toString());
       storage.setItem('tokenAndId', json.encode({'token': token, 'uid': uid}));
       final userDetails = await storage.getItem('tokenAndId');
       debugPrint(userDetails);

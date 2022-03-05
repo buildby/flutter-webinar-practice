@@ -63,13 +63,23 @@ class _TodoListState extends State<TodoList> {
         children: [
           InkWell(
             onTap: () async {
-              await Provider.of<TodoProvider>(context, listen: false)
-                  .toggleMarkTodo(
-                      token: Provider.of<AuthProvider>(context, listen: false)
-                          .userModel
-                          .token,
-                      taskId: widget.todoModel.id,
-                      isCompleted: widget.todoModel.isCompleted);
+              final result =
+                  await Provider.of<TodoProvider>(context, listen: false)
+                      .toggleMarkTodo(
+                          token:
+                              Provider.of<AuthProvider>(context, listen: false)
+                                  .userModel
+                                  .token,
+                          taskId: widget.todoModel.id,
+                          isCompleted: widget.todoModel.isCompleted);
+
+              if (result) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                      'Task marked as ${widget.todoModel.isCompleted ? 'Completed' : 'Incompleted'}'),
+                  duration: const Duration(seconds: 1),
+                ));
+              }
             },
             child: Container(
               margin: EdgeInsets.only(right: deviceWidth * 0.05),

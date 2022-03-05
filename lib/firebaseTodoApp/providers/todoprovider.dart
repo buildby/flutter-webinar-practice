@@ -110,8 +110,12 @@ class TodoProvider with ChangeNotifier {
             todo.isCompleted = isCompleted;
           }
         }
+
         notifyListeners();
+
+        return false;
       }
+      return true;
     } catch (e) {
       rethrow;
     }
