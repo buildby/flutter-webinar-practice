@@ -78,7 +78,7 @@ class TodoProvider with ChangeNotifier {
                 title: title));
         notifyListeners();
       }
-      print(response);
+      debugPrint(response.toString());
     } catch (e) {
       rethrow;
     }
@@ -112,7 +112,9 @@ class TodoProvider with ChangeNotifier {
         }
         notifyListeners();
       }
-    } catch (e) {}
+    } catch (e) {
+      rethrow;
+    }
   }
 
   deleteTodo({required String taskId, required String token}) async {
@@ -124,6 +126,8 @@ class TodoProvider with ChangeNotifier {
 
     final response = await http.delete(Uri.parse(url), headers: header);
 
-    final responseData = json.decode(response.body);
+    debugPrint(response.toString());
+
+    // final responseData = json.decode(response.body);
   }
 }

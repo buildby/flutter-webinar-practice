@@ -24,7 +24,11 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
 
       await fetchTodos();
     } catch (e) {
-      print(e);
+      // print(e);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+        duration: const Duration(seconds: 1),
+      ));
     } finally {
       setState(() {
         isLoading = false;
@@ -72,7 +76,7 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
               onRefresh: () async {
                 await fetchTodos();
               },
-              child: Container(
+              child: SizedBox(
                 height: deviceHeight,
                 child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),

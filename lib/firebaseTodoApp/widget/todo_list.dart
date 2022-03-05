@@ -35,7 +35,7 @@ class _TodoListState extends State<TodoList> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('No')),
+              child: const Text('No')),
         ],
       ),
     );
@@ -46,7 +46,7 @@ class _TodoListState extends State<TodoList> {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: const [
@@ -86,7 +86,7 @@ class _TodoListState extends State<TodoList> {
                             : Colors.transparent,
                         blurRadius: 2,
                         spreadRadius: 2,
-                        offset: Offset(4, 4)),
+                        offset: const Offset(4, 4)),
                   ],
                   borderRadius: BorderRadius.circular(5),
                   color: widget.todoModel.isCompleted

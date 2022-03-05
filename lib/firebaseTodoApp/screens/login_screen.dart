@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isEmail(String string) {
     // Null or empty string is invalid
-    if (string == null || string.isEmpty) {
+    if (string.isEmpty) {
       return false;
     }
 
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (isExist) {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => TodoHomeScreen()),
+          MaterialPageRoute(builder: (context) => const TodoHomeScreen()),
           (route) => false);
     }
   }
@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontSize: textScaleFactor * 20,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xff050A30),
+                          color: const Color(0xff050A30),
                         ),
                       ),
                       margin: EdgeInsets.only(bottom: deviceWidth * 0.05),
@@ -279,7 +279,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               });
                             }
                           },
-                          icon: Icon(Icons.person),
+                          icon:const Icon(Icons.person),
                           label: Text(authAction == 'login'
                               ? 'Create new account'
                               : 'Already user login')),

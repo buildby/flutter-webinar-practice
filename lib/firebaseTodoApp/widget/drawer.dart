@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snippets/main.dart';
-import 'package:flutter_snippets/firebaseTodoApp/models/user_model.dart';
 import 'package:flutter_snippets/firebaseTodoApp/providers/authprovider.dart';
 import 'package:flutter_snippets/firebaseTodoApp/providers/todoprovider.dart';
 import 'package:flutter_snippets/firebaseTodoApp/screens/login_screen.dart';
@@ -75,9 +74,9 @@ class _AppDrawerState extends State<AppDrawer> {
                   Provider.of<TodoProvider>(context, listen: false)
                       .setTodoToEmpty();
                 },
-                child: Text('Logout'),
+                child: const Text('Logout'),
                 style: TextButton.styleFrom(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     alignment: Alignment.centerLeft),
               ),
             ),
@@ -87,12 +86,12 @@ class _AppDrawerState extends State<AppDrawer> {
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                       (route) => false);
                 },
-                child: Text('Goto Demo App'),
+                child: const Text('Goto Demo App'),
                 style: TextButton.styleFrom(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     alignment: Alignment.centerLeft),
               ),
             )
