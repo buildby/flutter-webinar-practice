@@ -67,8 +67,8 @@ class _NewTodoState extends State<NewTodo> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       Navigator.pop(context);
-                      print(task.text);
-                      await Provider.of<TodoProvider>(context, listen: false)
+                      final response = await Provider.of<TodoProvider>(context,
+                              listen: false)
                           .createTodo(
                               uid: Provider.of<AuthProvider>(context,
                                       listen: false)
@@ -79,6 +79,13 @@ class _NewTodoState extends State<NewTodo> {
                                       listen: false)
                                   .userModel
                                   .token);
+
+                      if (response != null && response['error'] != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(response['error']['message']),
+                          duration: const Duration(seconds: 1),
+                        ));
+                      }
                     }
                   },
                   child: const Icon(Icons.check, color: Colors.white),

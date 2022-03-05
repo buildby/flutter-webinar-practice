@@ -122,4 +122,8 @@ class AuthProvider with ChangeNotifier {
       return false;
     }
   }
+
+  logout() async {
+    await storage.deleteItem('tokenAndId');
+  }
 }

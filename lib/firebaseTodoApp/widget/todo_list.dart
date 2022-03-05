@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snippets/firebaseTodoApp/models/todomodel.dart';
+import 'package:flutter_snippets/firebaseTodoApp/providers/authprovider.dart';
+import 'package:flutter_snippets/firebaseTodoApp/providers/todoprovider.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class TodoList extends StatefulWidget {
   final TodoModel todoModel;
@@ -11,6 +14,33 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
+  showDeleteAlertDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete'),
+        content: Text('Are sure want to delete ${widget.todoModel.title}'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Provider.of<TodoProvider>(context, listen: false).deleteTodo(
+                    taskId: widget.todoModel.id,
+                    token: Provider.of<AuthProvider>(context, listen: false)
+                        .userModel
+                        .token);
+              },
+              child: const Text('Yes')),
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('No')),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
@@ -31,28 +61,39 @@ class _TodoListState extends State<TodoList> {
       margin: EdgeInsets.only(bottom: deviceWidth * 0.08),
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: deviceWidth * 0.05),
-            child: const Icon(
-              Icons.check,
-              color: Colors.white,
+          InkWell(
+            onTap: () async {
+              await Provider.of<TodoProvider>(context, listen: false)
+                  .toggleMarkTodo(
+                      token: Provider.of<AuthProvider>(context, listen: false)
+                          .userModel
+                          .token,
+                      taskId: widget.todoModel.id,
+                      isCompleted: widget.todoModel.isCompleted);
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: deviceWidth * 0.05),
+              child: const Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: widget.todoModel.isCompleted
+                            ? Colors.black12
+                            : Colors.transparent,
+                        blurRadius: 2,
+                        spreadRadius: 2,
+                        offset: Offset(4, 4)),
+                  ],
+                  borderRadius: BorderRadius.circular(5),
+                  color: widget.todoModel.isCompleted
+                      ? const Color(0xff050A30)
+                      : Colors.transparent,
+                  border: Border.all(color: const Color(0xff050A30))),
             ),
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: widget.todoModel.isCompleted
-                          ? Colors.black12
-                          : Colors.transparent,
-                      blurRadius: 2,
-                      spreadRadius: 2,
-                      offset: Offset(4, 4)),
-                ],
-                borderRadius: BorderRadius.circular(5),
-                color: widget.todoModel.isCompleted
-                    ? const Color(0xff050A30)
-                    : Colors.transparent,
-                border: Border.all(color: const Color(0xff050A30))),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +124,14 @@ class _TodoListState extends State<TodoList> {
               )
             ],
           ),
-          InkWell(onTap: () {}, child: const Icon(Icons.delete))
+          InkWell(
+              onTap: () {
+                showDeleteAlertDialog();
+              },
+              child: const Icon(
+                Icons.delete_rounded,
+                color: Colors.red,
+              ))
         ],
       ),
     );

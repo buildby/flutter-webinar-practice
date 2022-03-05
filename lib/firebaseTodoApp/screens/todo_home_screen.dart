@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snippets/firebaseTodoApp/models/todomodel.dart';
+import 'package:flutter_snippets/firebaseTodoApp/providers/authprovider.dart';
 import 'package:flutter_snippets/firebaseTodoApp/providers/todoprovider.dart';
 import 'package:flutter_snippets/firebaseTodoApp/widget/drawer.dart';
 import 'package:flutter_snippets/firebaseTodoApp/widget/new_todo.dart';
 import 'package:flutter_snippets/firebaseTodoApp/widget/todo_list.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TodoHomeScreen extends StatefulWidget {
@@ -21,12 +21,27 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
       setState(() {
         isLoading = true;
       });
-      await Provider.of<TodoProvider>(context, listen: false).fetchTodos();
+
+      await fetchTodos();
     } catch (e) {
+      print(e);
     } finally {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  fetchTodos() async {
+    try {
+      Provider.of<TodoProvider>(context, listen: false).setTodoToEmpty();
+      await Provider.of<TodoProvider>(context, listen: false).fetchTodos(
+        token:
+            Provider.of<AuthProvider>(context, listen: false).userModel.token,
+        uid: Provider.of<AuthProvider>(context, listen: false).userModel.uid,
+      );
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -39,6 +54,8 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.of(context).size.width;
+    final deviceHeight = MediaQuery.of(context).size.height;
+
     final List<TodoModel> todos = Provider.of<TodoProvider>(context).todos;
     return Scaffold(
       appBar: AppBar(
@@ -48,13 +65,25 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
       drawer: const Drawer(
         child: AppDrawer(),
       ),
-      body: SafeArea(
-          child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                  horizontal: deviceWidth * 0.05, vertical: deviceWidth * 0.05),
-              child: Column(
-                children: [...todos.map((e) => TodoList(todoModel: e))],
-              ))),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SafeArea(
+              child: RefreshIndicator(
+              onRefresh: () async {
+                await fetchTodos();
+              },
+              child: Container(
+                height: deviceHeight,
+                child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: deviceWidth * 0.05,
+                        vertical: deviceWidth * 0.05),
+                    child: Column(
+                      children: [...todos.map((e) => TodoList(todoModel: e))],
+                    )),
+              ),
+            )),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff050A30),
         child: const Icon(Icons.add),

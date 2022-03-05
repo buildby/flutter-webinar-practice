@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snippets/main.dart';
 import 'package:flutter_snippets/firebaseTodoApp/models/user_model.dart';
 import 'package:flutter_snippets/firebaseTodoApp/providers/authprovider.dart';
+import 'package:flutter_snippets/firebaseTodoApp/providers/todoprovider.dart';
+import 'package:flutter_snippets/firebaseTodoApp/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -46,11 +49,11 @@ class _AppDrawerState extends State<AppDrawer> {
                     children: [
                       Text(
                         'Hi, ' + userModel.name.toUpperCase(),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w600),
                       ),
                       Text(userModel.email,
-                          style: TextStyle(letterSpacing: 0.5)),
+                          style: const TextStyle(letterSpacing: 0.5)),
                     ],
                   ),
                 )
@@ -59,7 +62,19 @@ class _AppDrawerState extends State<AppDrawer> {
             SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await Provider.of<AuthProvider>(context, listen: false)
+                      .logout();
+
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                      (route) => false);
+
+                  Provider.of<TodoProvider>(context, listen: false)
+                      .setTodoToEmpty();
+                },
                 child: Text('Logout'),
                 style: TextButton.styleFrom(
                     padding: EdgeInsets.all(20),
@@ -69,7 +84,12 @@ class _AppDrawerState extends State<AppDrawer> {
             SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                      (route) => false);
+                },
                 child: Text('Goto Demo App'),
                 style: TextButton.styleFrom(
                     padding: EdgeInsets.all(20),
