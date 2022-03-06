@@ -1,6 +1,6 @@
-const firebaseApiKey = 'AIzaSyAyTDTgHxWGtw39f3Del-EbS3cpjeX-9BM';
+const firebaseApiKey = 'Your project API key';
 
-const webApi = {'domain': 'https://webinar-new-project-default-rtdb.firebaseio.com/'};
+const webApi = {'domain': '<Your project real time database link>'};
 
 const endPoints = {
   'user': 'user.json',
