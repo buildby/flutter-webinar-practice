@@ -389,7 +389,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(
                           builder: (context) => const LoginScreen())),
                   child: const Text(
-                    'Firebase Exaple',
+                    'Firebase Example',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ),

@@ -93,16 +93,16 @@ class AuthProvider with ChangeNotifier {
       final response = await http.get(Uri.parse(url), headers: header);
       final responseData = json.decode(response.body);
 
-      print(responseData);
+      // debugPrint(responseData);
       userModel = UserModel(
           email: responseData[responseData.keys.first]['email'],
           token: token,
           name: responseData[responseData.keys.first]['name'],
           uid: uid);
-      print(userModel);
+      // debugPrint(userModel.toString());
       storage.setItem('tokenAndId', json.encode({'token': token, 'uid': uid}));
       final userDetails = await storage.getItem('tokenAndId');
-      print(userDetails);
+      debugPrint(userDetails);
     } catch (e) {
       rethrow;
     }
@@ -121,5 +121,9 @@ class AuthProvider with ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  logout() async {
+    await storage.deleteItem('tokenAndId');
   }
 }
