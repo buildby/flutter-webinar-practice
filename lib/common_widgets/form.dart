@@ -21,90 +21,97 @@ class _FormExampleState extends State<FormExample> {
         title: const Text('Form Example'),
       ),
       body: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter Your Name',
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xff050A30), width: 0.0),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xff050A30), width: 0.0),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xff050A30), width: 0.0),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == '') return 'Please Enter Your name';
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: ageController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter age',
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xff050A30), width: 0.0),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xff050A30), width: 0.0),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color(0xff050A30), width: 0.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  child: TextFormField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Enter Your Name',
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(0xff050A30), width: 1.0),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(0xff050A30), width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(0xff050A30), width: 1.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == '') return 'Please Enter Your name';
+                    },
                   ),
                 ),
-                validator: (value) {
-                  if (value == '') return 'Please Enter Your age';
-                  if (int.tryParse(value!) == null) {
-                    return 'Please Enter a valid age';
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 200,
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 16, letterSpacing: .5),
-                    primary: const Color(0xff050A30),
-                    padding: const EdgeInsets.all(14),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: ageController,
+                  decoration: const InputDecoration(
+                    labelText: 'Enter age',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xff050A30), width: 0.0),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xff050A30), width: 0.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xff050A30), width: 0.0),
+                    ),
                   ),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Form is submitted'),
-                        duration: Duration(seconds: 1),
-                      ));
-                      setState(() {
-                        nameController.text = '';
-                        ageController.text = '';
-                      });
+                  validator: (value) {
+                    if (value == '') return 'Please Enter Your age';
+                    if (int.tryParse(value!) == null) {
+                      return 'Please Enter a valid age';
                     }
                   },
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(
+                  height: 200,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 20),
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle:
+                          const TextStyle(fontSize: 16, letterSpacing: .5),
+                      primary: const Color(0xff050A30),
+                      padding: const EdgeInsets.all(14),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('Form is submitted'),
+                          duration: Duration(seconds: 1),
+                        ));
+                        setState(() {
+                          nameController.text = '';
+                          ageController.text = '';
+                        });
+                      }
+                    },
+                    child: const Text(
+                      'Submit',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -11,7 +11,7 @@ class _PageWithoutSafeAreaState extends State<PageWithoutSafeArea> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text("To avoid this please user safearea"),
+      body: Text("To avoid this please use safearea"),
     );
   }
 }

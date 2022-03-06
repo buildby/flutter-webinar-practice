@@ -10,8 +10,10 @@ class PageWithSafeArea extends StatefulWidget {
 class _PageWithSafeAreaState extends State<PageWithSafeArea> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("Good You used safearea"),
+    return const SafeArea(
+      child: Scaffold(
+        body: Text("Good....... You used safearea"),
+      ),
     );
   }
 }
