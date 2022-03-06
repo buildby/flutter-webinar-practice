@@ -1,6 +1,7 @@
 const firebaseApiKey = 'AIzaSyDqAmztERlW0Sqf6t-ffKL9p6S8S_3jKHA';
 
-const webApi = {'domain': 'https://webinar-3a856-default-rtdb.firebaseio.com/'};
+// const webApi = {'domain': 'https://webinar-3a856-default-rtdb.firebaseio.com/'};
+const webApi = {'domain': 'https://webinar-d29dc-default-rtdb.firebaseio.com/'};
 
 const endPoints = {
   'user': 'user.json',
