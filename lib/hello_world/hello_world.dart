@@ -18,7 +18,7 @@ class _HelloWorldState extends State<HelloWorld> {
       body: const SafeArea(
         child: Center(
           child: Text(
-            'Hello World In flutter',
+            'Hello World In flutter ...Dev',
             style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
           ),
         ),

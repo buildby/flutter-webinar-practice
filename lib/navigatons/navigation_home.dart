@@ -22,7 +22,7 @@ class _NavigationExampleState extends State<NavigationExample> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(
+              ElevatedButton(
                 child: const Text('Go to Second Page with push'),
                 onPressed: () {
                   Navigator.push(
@@ -31,13 +31,13 @@ class _NavigationExampleState extends State<NavigationExample> {
                           builder: (context) => const SecondPage()));
                 },
               ),
-              TextButton(
+              ElevatedButton(
                 child: const Text('Go to Second Page with pushNamed'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/second-page');
                 },
               ),
-              TextButton(
+              ElevatedButton(
                 child: const Text('Go to Home Page with pushAndRemoveUntil'),
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(
@@ -46,7 +46,7 @@ class _NavigationExampleState extends State<NavigationExample> {
                       (route) => false);
                 },
               ),
-              TextButton(
+              ElevatedButton(
                 child: const Text('Pop this page'),
                 onPressed: () {
                   Navigator.pop(context);

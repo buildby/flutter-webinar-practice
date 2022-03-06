@@ -31,7 +31,7 @@ class _ButtonExampleState extends State<ButtonExample> {
                 ));
               },
               child: const Text(
-                "Text Button",
+                "Press Me",
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -39,7 +39,7 @@ class _ButtonExampleState extends State<ButtonExample> {
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Outlined button is clicked'),
-                    duration: Duration(seconds: 1),
+                    duration: Duration(seconds: 3),
                   ));
                 },
                 child: const Text(

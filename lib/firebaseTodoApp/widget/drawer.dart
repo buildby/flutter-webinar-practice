@@ -42,6 +42,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   padding: const EdgeInsets.all(20),
                 ),
                 Container(
+                  width: MediaQuery.of(context).size.width*0.5,
                   margin: EdgeInsets.symmetric(horizontal: deviceWidth * 0.02),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -28,7 +28,7 @@ class _ContainerExampleState extends State<ContainerExample> {
                 margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
                     color: Colors.purple,
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(50)),
               ),
               Container(
                 height: 200,

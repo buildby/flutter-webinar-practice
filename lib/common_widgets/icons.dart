@@ -23,7 +23,7 @@ class _IconExampleState extends State<IconExample> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.alarm),
+              Icon( Icons.account_tree),
               Text(
                 'alarm Icon',
                 style: TextStyle(fontWeight: FontWeight.w500),
